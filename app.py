@@ -146,13 +146,14 @@ INPUT : Question ID
 '''
 @app.route('/question/answer/<question_ID>', methods = ['POST'])
 def addAnswer(question_ID):
-	question = [question for question in Questions if question['id'] == question_ID]
+	question = [q for q in Questions if q['id'] == question_ID]
 	
 	if len(question) == 0:
 		abort(404) 
 	
-	if not request.json:
-		abort(400)
+	# if not request.json:
+	# 	abort(400)
+
 	answer_ID = 'A' + randomIDGen()
 	answer = {  'id' : answer_ID,
 				'answer' : request.json['answer'],
@@ -160,7 +161,7 @@ def addAnswer(question_ID):
 				'dislike' : 0}
 	question[0]['answers'].append(answer)
 
-	return jsonify({'question' : question})
+	return jsonify(question[0])
 
 '''
 Like a particular answer to a particular question
