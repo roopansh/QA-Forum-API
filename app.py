@@ -87,9 +87,9 @@ Return a random question
 '''
 @app.route('/question/random', methods = ['GET'])
 def getRandomQuestion():
-	question = questions[randint(0,len(questions))]
-	if len(question) == 0:
+	if len(questions) == 0:
 		abort(404) 
+	question = questions[randint(0,len(questions))]
 	return jsonify({"question": question})
 
 '''
