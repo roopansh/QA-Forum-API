@@ -176,7 +176,8 @@ def likeAnswer(question_ID, answer_ID):
 			for answer in q['answers']:
 				if answer['id'] == answer_ID:
 					answer['like'] = answer['like'] + 1
-	return question[0]
+					return jsonify({'success' : 'true'})
+	abort(404)
 
 
 '''
@@ -192,7 +193,8 @@ def disLikeAnswer(question_ID, answer_ID):
 			for answer in q['answers']:
 				if answer['id'] == answer_ID:
 					answer['dislike'] = answer['dislike'] + 1
-	return question[0]
+					return jsonify({'success' : 'true'})
+	abort(404)
 
 
 if __name__ == '__main__':
