@@ -107,7 +107,7 @@ Return a random question
 def getRandomQuestion():
 	if len(Questions) == 0:
 		abort(404) 
-	question = Questions[randint(0,len(Questions))]
+	question = Questions[randint(0,len(Questions)-1)]
 	return jsonify({"question": question})
 
 '''
