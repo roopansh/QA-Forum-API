@@ -32,7 +32,24 @@ Questions contain the following fields :-
 					  ]
 	}
 '''
-Questions = []
+Questions = [ {	
+				'id' 		: "abcdefgh",
+				'question' 	: "What do you like?",
+				'answers'	: [
+								{
+									'id'	 : 'Amangoes',
+									'answer' : 'Mangoes',
+									'like'	 : 0,
+									'dislike': 1
+								},
+								{
+									'id'	 : 'Aapples',
+									'answer' : 'apples',
+									'like'	 : 85,
+									'dislike': 0
+								},
+							  ]
+	} ]
 
 '''
 Polls contain the following fields :-
