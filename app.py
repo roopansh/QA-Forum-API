@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, make_response, request, abort
+from random import randint
 
 app = Flask(__name__)
 
@@ -92,7 +93,7 @@ INPUT : ID of the question
 '''
 @app.route('/question/get/<question_ID>', methods = ['GET'])
 def getQuestion(question_ID):
-	question = [question for question in questions if question['id'] == question_ID]
+	question = [question for question in Questions if question['id'] == question_ID]
 	
 	if len(question == 0):
 		abort(404) 
@@ -102,11 +103,11 @@ def getQuestion(question_ID):
 '''
 Return a random question
 '''
-@app.route('/question/random', methods = ['GET'])
+@app.route('/question/random/', methods = ['GET'])
 def getRandomQuestion():
-	if len(questions) == 0:
+	if len(Questions) == 0:
 		abort(404) 
-	question = questions[randint(0,len(questions))]
+	question = Questions[randint(0,len(Questions))]
 	return jsonify({"question": question})
 
 '''
@@ -115,7 +116,7 @@ INPUT : Question ID
 '''
 @app.route('/question/getanswer/<question_ID>', methods = ['GET'])
 def getAnswersof(question_ID):
-	question = [question for question in questions if question['id'] == question_ID]
+	question = [question for question in Questions if question['id'] == question_ID]
 
 	if len(question) == 0:
 		abort(404) 
@@ -134,7 +135,7 @@ def addQuestion():
 				 'question' : request.json['question'],
 				 'answers' : []
 			   }
-	questions.append(question)
+	Questions.append(question)
 	return jsonify({'question' : question})
 
 '''
@@ -143,7 +144,7 @@ INPUT : Question ID
 '''
 @app.route('/question/answer/<question_ID>', methods = ['POST'])
 def addAnswer(question_ID):
-	question = [question for question in questions if question['id'] == question_ID]
+	question = [question for question in Questions if question['id'] == question_ID]
 	
 	if len(question) == 0:
 		abort(404) 
@@ -166,7 +167,7 @@ INPUT : Question ID, Answer_ID
 @app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
 def likeAnswer(question_ID, answer_ID):
 	question = []
-	for q in questions:
+	for q in Questions:
 		if q['id'] == question_ID:
 			question.append(q)
 			for answer in q['answers']:
@@ -182,7 +183,7 @@ INPUT : Question ID, Answer_ID
 @app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
 def disLikeAnswer(question_ID, answer_ID):
 	question = []
-	for q in questions:
+	for q in Questions:
 		if q['id'] == question_ID:
 			question.append(q)
 			for answer in q['answers']:
