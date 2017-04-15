@@ -108,7 +108,7 @@ def getRandomQuestion():
 	if len(Questions) == 0:
 		abort(404) 
 	question = Questions[randint(0,len(Questions)-1)]
-	return jsonify({"question": question[0]})
+	return jsonify(question)
 
 '''
 Return the answers to a particular question
