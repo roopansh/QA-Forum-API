@@ -1,10 +1,176 @@
-from flask import Flask, jsonify
-from datetime import datetime
+from flask import Flask, jsonify, make_response, request, abort
+
 app = Flask(__name__)
 
-@app.route('/')
+# For storing the Questions
+
+'''
+Questions contain the following fields :-
+	id
+	question
+	answers(list)
+		likes
+		dislikes
+
+	Example template :-
+	{	
+		'id' 		: question_ID,
+		'question' 	: "What do you like?",
+		'answers'	: [
+						{
+							'id'	 : answer_ID,
+							'answer' : 'Answer1',
+							'like'	 : like,
+							'dislike': dislike
+						},
+						{
+							'id'	 : answer_ID,
+							'answer' : 'Answer2',
+							'like'	 : like,
+							'dislike': dislike
+						},
+					  ]
+	}
+'''
+Questions = []
+
+'''
+Polls contain the following fields :-
+
+	TO DO
+
+'''
+Polls = []
+
+
+def randomIDGen():
+	'''
+	Random ID generator
+	'''
+
+	# check if the ID is already present, 
+	# to be implemented
+
+	chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	ID = "".join(random.choice(chars) for _ in range(8))
+	return ID;
+
+'''
+Error Handling 404 : Resource not found
+'''
+@app.errorhandler(404)
+def notFound(error):
+	return make_response(jsonify({'error': 'Not found'}), 404)
+
+'''
+Check connection to the API
+'''
+@app.route('/', methods = ['GET'])
 def homepage():
 	return jsonify({"success": "true"})
+
+'''
+Get question and it's answer
+INPUT : ID of the question
+'''
+@app.route('/question/get/<question_ID>', methods = ['GET'])
+def getQuestion(question_ID):
+	question = [question for question in questions if question['id'] == question_ID]
 	
+	if len(question == 0):
+		abort(404) 
+	
+	return jsonify({"question": question[0]})
+
+'''
+Return a random question
+'''
+@app.route('/question/random', methods = ['GET'])
+def getRandomQuestion():
+	question = questions[randint(0,len(questions))]
+	return jsonify({"question": question})
+
+'''
+Return the answers to a particular question
+INPUT : Question ID
+'''
+@app.route('/question/getanswer/<question_ID>', methods = ['GET'])
+def getAnswersof(question_ID):
+	question = [question for question in questions if question['id'] == question_ID]
+
+	if len(question) == 0:
+		abort(404) 
+	
+	return jsonify({"question" : question[0]})
+
+'''
+Add new question
+'''
+@app.route('/question/add/', methods = ['POST'])
+def addQuestion():
+	if not request.json or not 'question' in request.json:
+		abort(400)
+	ID = randomIDGen()
+	question = { 'id' : ID, 
+				 'question' : request.json['question'],
+				 'answers' : []
+			   }
+	questions.append(question)
+	return jsonify({'question' : question})
+
+'''
+Answer to question
+INPUT : Question ID
+'''
+@app.route('/question/answer/<question_ID>', methods = ['POST'])
+def addAnswer(question_ID):
+	question = [question for question in questions if question['id'] == question_ID]
+	
+	if len(question) == 0:
+		abort(404) 
+	
+	if not request.json:
+		abort(400)
+	answer_ID = 'A' + randomIDGen()
+	answer = {  'id' : answer_ID,
+				'answer' : request.json['answer'],
+				'like' : 0,
+				'dislike' : 0}
+	question[0]['answers'].append(answer)
+
+	return jsonify({'question' : question})
+
+'''
+Like a particular answer to a particular question
+INPUT : Question ID, Answer_ID
+'''
+@app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
+def likeAnswer(question_ID, answer_ID):
+	question = []
+	for q in questions:
+		if q['id'] == question_ID:
+			question.append(q)
+			for answer in q['answers']:
+				if answer['id'] == answer_ID:
+					answer['like'] = answer['like'] + 1
+	return question[0]
+
+
+'''
+Dislike a particular answer to a particular question
+INPUT : Question ID, Answer_ID
+'''
+@app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
+def disLikeAnswer(question_ID, answer_ID):
+	question = []
+	for q in questions:
+		if q['id'] == question_ID:
+			question.append(q)
+			for answer in q['answers']:
+				if answer['id'] == answer_ID:
+					answer['dislike'] = answer['dislike'] + 1
+	return question[0]
+
+
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True)
