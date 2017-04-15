@@ -80,6 +80,10 @@ Error Handling 404 : Resource not found
 def notFound(error):
 	return make_response(jsonify({'error': 'Not found'}), 404)
 
+@app.errorhandler(400)
+def badRequest(error):
+	return make_response(jsonify({'error': 'Bad request'}), 400)
+
 '''
 Check connection to the API
 '''
