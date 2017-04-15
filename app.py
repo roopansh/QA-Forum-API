@@ -93,12 +93,12 @@ INPUT : ID of the question
 '''
 @app.route('/question/get/<question_ID>', methods = ['GET'])
 def getQuestion(question_ID):
-	question = [question for question in Questions if question['id'] == question_ID]
-	
-	if len(question == 0):
+	question = []
+	question = [q for q in Questions if q['id'] == question_ID]
+	if len(question) == 0:
 		abort(404) 
 	
-	return jsonify({"question": question[0]})
+	return jsonify(question[0])
 
 '''
 Return a random question
@@ -123,7 +123,7 @@ def getAnswersof(question_ID):
 	if len(question) == 0:
 		abort(404) 
 	
-	return jsonify({"question" : question[0]})
+	return jsonify(question[0])
 
 '''
 Add new question
@@ -166,7 +166,7 @@ def addAnswer(question_ID):
 Like a particular answer to a particular question
 INPUT : Question ID, Answer_ID
 '''
-@app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
+@app.route('/like/<question_ID>/<answer_ID>', methods = ['POST'])
 def likeAnswer(question_ID, answer_ID):
 	question = []
 	for q in Questions:
@@ -182,7 +182,7 @@ def likeAnswer(question_ID, answer_ID):
 Dislike a particular answer to a particular question
 INPUT : Question ID, Answer_ID
 '''
-@app.route('/like/<question_ID>/<answer_ID>', methods = ['GET'])
+@app.route('/dislike/<question_ID>/<answer_ID>', methods = ['POST'])
 def disLikeAnswer(question_ID, answer_ID):
 	question = []
 	for q in Questions:
