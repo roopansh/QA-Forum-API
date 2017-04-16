@@ -35,18 +35,18 @@ Questions contain the following fields :-
 '''
 Questions = [ {	
 				'id' 		: "z2VaRBy3",
-				'question' 	: "What do you like?",
+				'question' 	: "What makes something taste saltier?",
 				'answers'	: [
 								{
-									'id'	 : 'Amangoes',
-									'answer' : 'Mangoes',
+									'id'	 : 'XBeFngE1',
+									'answer' : 'Salt',
 									'like'	 : 0,
-									'dislike': 1
+									'dislike': 0
 								},
 								{
 									'id'	 : 'Aapples',
-									'answer' : 'apples',
-									'like'	 : 85,
+									'answer' : 'Not sugar',
+									'like'	 : 0,
 									'dislike': 0
 								},
 							  ]
