@@ -44,8 +44,32 @@ Questions = [ {
 									'dislike': 0
 								},
 								{
-									'id'	 : 'Aapples',
+									'id'	 : 'diusfhns',
 									'answer' : 'Not sugar',
+									'like'	 : 0,
+									'dislike': 0
+								},
+							  ]
+	},
+	{	
+				'id' 		: "pAERrtwq",
+				'question' 	: "What Colour were carrots originally?",
+				'answers'	: [
+								{
+									'id'	 : 'MBeFngE1',
+									'answer' : 'Originally, purple carrots were the norm, but there were some offshoots. Yellow and white ones appeared in the wild.',
+									'like'	 : 0,
+									'dislike': 0
+								},
+							  ]
+	},
+	{	
+				'id' 		: "qqwertwq",
+				'question' 	: "How fast was the meteor that killed the dinosaurs?",
+				'answers'	: [
+								{
+									'id'	 : 'UYGyunyb',
+									'answer' : 'Scientists calculate that it was blasted into Earth by a 10-kilometer-wide asteroid or comet traveling 30 kilometers per second -- 150 times faster than a jet airliner.',
 									'like'	 : 0,
 									'dislike': 0
 								},
