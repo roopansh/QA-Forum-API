@@ -34,7 +34,7 @@ Questions contain the following fields :-
 	}
 '''
 Questions = [ {	
-				'id' 		: "abcdefgh",
+				'id' 		: "z2VaRBy3",
 				'question' 	: "What do you like?",
 				'answers'	: [
 								{
@@ -102,7 +102,7 @@ def getQuestion(question_ID):
 	if len(question) == 0:
 		abort(404) 
 	
-	return jsonify(question[0])
+	return jsonify({ 'result' : question[0]})
 
 '''
 Return a random question
