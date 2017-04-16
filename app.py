@@ -200,6 +200,9 @@ def disLikeAnswer(question_ID, answer_ID):
 					return jsonify({'success' : 'true'})
 	abort(404)
 
+@app.route('/question/all')
+def completeQuestionList():
+	return jsonify(Questions)
 
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True)
